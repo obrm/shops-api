@@ -6,12 +6,14 @@ import {
   updateShop,
   deleteShop
 } from '../controllers/shopController.js';
+import advancedResults from '../middleware/advancedResults.js';
+import Shop from '../models/Shop.js';
 
 const router = express.Router();
 
 router
   .route('/')
-  .get(getShops)
+  .get(advancedResults(Shop), getShops)
   .post(createShop);
 
 router

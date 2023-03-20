@@ -4,12 +4,8 @@ import Shop from '../models/Shop.js';
 // @desc    Get all Shops
 // @route   GET /api/v1/shops
 // @access  Public
-export const getShops = asyncHandler(async (req, res, next) => {
-  const shop = await Shop.find({});
-  res.status(200).json({
-    success: true,
-    data: shop,
-  });
+export const getShops = asyncHandler(async (req, res, next) => { 
+  res.status(200).json(res.advancedResults);
 });
 
 // @desc    Create a Shop
