@@ -3,7 +3,8 @@ import dotenv from 'dotenv';
 import colors from 'colors';
 import morgan from 'morgan';
 
-import shops from './routes/shopRoutes.js';
+import shops from './routes/shopsRoutes.js';
+import products from './routes/productsRoutes.js';
 
 import errorHandler from './middleware/errorHandler.js';
 
@@ -29,6 +30,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/v1/shops', shops);
+app.use('/api/v1/products', products);
 
 app.use(errorHandler);
 

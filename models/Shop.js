@@ -44,7 +44,7 @@ const ShopSchema = new mongoose.Schema({
     min: [1, 'Rating must be at least 1'],
     max: [5, 'Rating must be less than 5']
   },
-  revenue: Number,
+  avgRevenue: Number,
   image: {
     type: String,
     default: 'no-image.jpg'
@@ -79,6 +79,21 @@ const ShopSchema = new mongoose.Schema({
 ShopSchema.pre('save', function (next) {
   this.slug = slugify(this.name, { lower: true });
   next();
+});
+
+// Cascade delete products when a shop is deleted
+ShopSchema.pre('deleteOne', { document: true, query: false }, async function (next) {
+  console.log(`Products being removed from shop ${this._id}`);
+  await this.model('Product').deleteMany({ shop: this._id });
+  next();
+});
+
+// Reverse populate with virtuals
+ShopSchema.virtual('products', {
+  ref: 'Product',
+  localField: '_id',
+  foreignField: 'shop',
+  justOne: false
 });
 
 export default mongoose.model('Shop', ShopSchema);
