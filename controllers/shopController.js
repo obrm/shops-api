@@ -32,7 +32,7 @@ export const getShop = asyncHandler(async (req, res, next) => {
   const shop = await Shop.findById(req.params.id);
 
   if (!shop) {
-    return next(new Error(`Bootcamp with id: ${req.params.id} not found`));
+    return next(new Error(`Shop that end with ${error.value.slice(-6)} not found`));
   }
 
   res.status(200).json({
@@ -51,7 +51,7 @@ export const updateShop = asyncHandler(async (req, res, next) => {
   });
 
   if (!shop) {
-    return next(new Error(`Bootcamp with id: ${req.params.id} not found`));
+    return next(new Error(`Shop that end with ${error.value.slice(-6)} not found`));
   }
 
   res.status(200).json({
@@ -59,6 +59,26 @@ export const updateShop = asyncHandler(async (req, res, next) => {
     data: shop,
   });
 });
+
+
+// @desc    Delete a shop
+// @route   DELETE /api/v1/shops/:id
+// @access  Private
+export const deleteShop = asyncHandler(async (req, res, next) => {
+  const shop = await Shop.findById(req.params.id);
+
+  if (!shop) {
+    return next(new ErrorResponse(`Shop that ends with '${req.params.id.slice(-6)}' was not found`, 404));
+  }
+
+  shop.deleteOne();
+
+  res.status(200).json({
+    success: true,
+    data: {}
+  });
+});
+
 
 
 
