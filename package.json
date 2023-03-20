@@ -1,5 +1,5 @@
 {
-	"name": "ecommerce-api",
+	"name": "shops-api",
 	"version": "1.0.0",
 	"description": "Virtual mall api",
 	"main": "server.js",
