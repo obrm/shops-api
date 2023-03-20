@@ -5,6 +5,8 @@ import morgan from 'morgan';
 
 import shops from './routes/shopRoutes.js';
 
+import errorHandler from './middleware/errorHandler.js';
+
 import connectDB from './config/db.js';
 
 dotenv.config({ path: './config/config.env' });
@@ -12,6 +14,9 @@ dotenv.config({ path: './config/config.env' });
 connectDB();
 
 const app = express();
+
+// Body parser middleware
+app.use(express.json());
 
 if (process.env.NODE_ENV !== 'production') {
   app.use(morgan('dev'));
@@ -24,6 +29,8 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/v1/shops', shops);
+
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 
