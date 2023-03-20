@@ -11,7 +11,9 @@ git clone https://github.com/obrm/shpos-api.git
 ```
 
 ## Prerequisites
-Make sure you have Node.js installed on your system. 
+Make sure you have Node.js installed on your system.
+
+### MongoDB Atlas
 
 To run this project, you'll also need to have a MongoDB Atlas account and create a project for this project in MongoDB Atlas. Once you have created a project in MongoDB Atlas, you can obtain your MongoDB URI, which you will need to set as an environment variable in the `config.env` file to connect to your database. See the [Local Environment Variables](#local-environment-variables) section in this README for more information.
 
