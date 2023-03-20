@@ -3,6 +3,7 @@ import {
   getShops,
   createShop,
   getShop,
+  updateShop,
   deleteShop
 } from '../controllers/shopController.js';
 
@@ -16,6 +17,7 @@ router
 router
   .route('/:id')
   .get(getShop)
+  .put(updateShop)
   .delete(deleteShop);
 
 export default router;
