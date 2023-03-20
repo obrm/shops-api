@@ -1,11 +1,23 @@
 {
-  "name": "ecommerce-api",
-  "version": "1.0.0",
-  "description": "Virtual mall api",
-  "main": "server.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "Ori Baram",
-  "license": "MIT"
+	"name": "ecommerce-api",
+	"version": "1.0.0",
+	"description": "Virtual mall api",
+	"main": "server.js",
+	"type": "module",
+	"scripts": {
+		"start": "node server.js",
+		"dev": "node --watch server.js"
+	},
+	"author": "Ori Baram",
+	"license": "MIT",
+	"devDependencies": {
+		"colors": "^1.4.0"
+	},
+	"dependencies": {
+		"dotenv": "^16.0.3",
+		"express": "^4.18.2",
+		"mongoose": "^7.0.2",
+		"morgan": "^1.10.0",
+		"slugify": "^1.6.5"
+	}
 }
