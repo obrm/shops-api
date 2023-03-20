@@ -32,7 +32,7 @@ export const getShop = asyncHandler(async (req, res, next) => {
   const shop = await Shop.findById(req.params.id);
 
   if (!shop) {
-    return next(new Error(`Shop that end with ${error.value.slice(-6)} not found`));
+    return next(new Error(`Shop that end with '${req.params.id.slice(-6)}' not found`));
   }
 
   res.status(200).json({
@@ -51,7 +51,7 @@ export const updateShop = asyncHandler(async (req, res, next) => {
   });
 
   if (!shop) {
-    return next(new Error(`Shop that end with ${error.value.slice(-6)} not found`));
+    return next(new Error(`Shop that end with '${req.params.id.slice(-6)}' not found`));
   }
 
   res.status(200).json({
