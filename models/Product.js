@@ -55,7 +55,6 @@ const ProductSchema = new mongoose.Schema({
     }
   });
 
-
 // Static method to get avg of products cost in the shop
 ProductSchema.statics.getAverageRevenue = async function (shopId) {
   const obj = await this.aggregate([

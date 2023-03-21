@@ -23,7 +23,7 @@ export const getProducts = asyncHandler(async (req, res, next) => {
 
 // @desc      Get single product
 // @route     GET /api/v1/products/:id
-// @route     GET /api/v1/shops/:shopId/products
+// @route     GET /api/v1/shops/:shopId/products/:id
 // @access    Public
 export const getProduct = asyncHandler(async (req, res, next) => {
   const product = await Product.findById(req.params.id).populate({
