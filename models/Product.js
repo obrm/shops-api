@@ -55,13 +55,16 @@ const ProductSchema = new mongoose.Schema({
     }
   });
 
-// Static method to get avg of products cost in the shop
+// Static method to get the average revenue (price) of products in a specific shop
 ProductSchema.statics.getAverageRevenue = async function (shopId) {
+  // Use MongoDB aggregation to calculate the average product price
   const obj = await this.aggregate([
     {
+      // $match stage filters documents to only include those with a matching shopId
       $match: { shop: shopId }
     },
     {
+      // $group stage groups the documents by the shop field and calculates the average price
       $group: {
         _id: '$shop',
         avgRevenue: { $avg: '$price' }
@@ -69,8 +72,11 @@ ProductSchema.statics.getAverageRevenue = async function (shopId) {
     }
   ]);
 
+  // Update the shop's avgRevenue field with the calculated value
   try {
+    // Use findByIdAndUpdate to update the Shop document with the new average revenue
     await this.model('Shop').findByIdAndUpdate(shopId, {
+      // Round the average revenue to the nearest 10 using Math.ceil
       avgRevenue: Math.ceil(obj[0].avgRevenue / 10) * 10
     });
   } catch (err) {
