@@ -14,6 +14,7 @@ const ProductSchema = new mongoose.Schema({
     type: Number,
     required: [true, 'Please add a price']
   },
+  amount: Number,
   category: {
     type: String,
     required: [true, 'Please add a minimum skill'],
@@ -55,19 +56,27 @@ const ProductSchema = new mongoose.Schema({
     }
   });
 
-// Static method to get the average revenue (price) of products in a specific shop
+// Static method to get the average revenue (price * amount) of products in a specific shop
 ProductSchema.statics.getAverageRevenue = async function (shopId) {
-  // Use MongoDB aggregation to calculate the average product price
+  // Use MongoDB aggregation to calculate the average product revenue
   const obj = await this.aggregate([
     {
       // $match stage filters documents to only include those with a matching shopId
       $match: { shop: shopId }
     },
     {
-      // $group stage groups the documents by the shop field and calculates the average price
+      // $addFields stage creates a new field 'revenue' by multiplying price and amount
+      $addFields: {
+        revenue: {
+          $multiply: ['$price', '$amount']
+        }
+      }
+    },
+    {
+      // $group stage groups the documents by the shop field and calculates the average revenue
       $group: {
         _id: '$shop',
-        avgRevenue: { $avg: '$price' }
+        avgRevenue: { $avg: '$revenue' }
       }
     }
   ]);
@@ -80,6 +89,7 @@ ProductSchema.statics.getAverageRevenue = async function (shopId) {
       avgRevenue: Math.ceil(obj[0].avgRevenue / 10) * 10
     });
   } catch (err) {
+    // Log any errors that occurred during the update
     console.error(err);
   }
 };
@@ -89,9 +99,17 @@ ProductSchema.post('save', function () {
   this.constructor.getAverageRevenue(this.shop);
 });
 
+// Call getAverageRevenue after update
+ProductSchema.post('findOneAndUpdate', async function (doc) {
+  if (doc) {
+    await this.model.getAverageRevenue(doc.shop);
+  }
+});
+
+
 // Call getAverageRevenue before remove
 ProductSchema.pre('deleteOne', function () {
-  this.constructor.getAverageCost(this.shop);
+  this.constructor.getAverageRevenue(this.shop);
 });
 
 export default mongoose.model('Product', ProductSchema);
