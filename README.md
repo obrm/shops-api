@@ -1,6 +1,6 @@
-# SHPOS API
+# SHOPS API
 
-This repository contains the source code for the SHPOS API. It's built using Node.js, Express.js, and MongoDB.
+This repository contains the source code for the Sops API. It's built using Node.js, Express.js, and MongoDB.
 
 ## Getting Started
 
