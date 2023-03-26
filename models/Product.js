@@ -25,6 +25,10 @@ const ProductSchema = new mongoose.Schema({
       'Health'
     ]
   },
+  image: {
+    type: String,
+    default: 'no-image.jpg'
+  },
   createdAt: {
     type: Date,
     default: Date.now
