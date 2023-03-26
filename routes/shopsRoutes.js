@@ -6,7 +6,9 @@ import {
   updateShop,
   deleteShop
 } from '../controllers/shopsController.js';
+
 import advancedResults from '../middleware/advancedResults.js';
+
 import Shop from '../models/Shop.js';
 
 import productsRouter from './productsRoutes.js';
