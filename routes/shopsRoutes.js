@@ -8,6 +8,7 @@ import {
 } from '../controllers/shopsController.js';
 
 import advancedResults from '../middleware/advancedResults.js';
+import { protect, authorize } from './../middleware/authMiddleware.js';
 
 import Shop from '../models/Shop.js';
 
@@ -23,12 +24,12 @@ router
 router
   .route('/')
   .get(advancedResults(Shop, 'products'), getShops)
-  .post(createShop);
+  .post(protect, authorize('admin', 'shop-owner'), createShop);
 
 router
   .route('/:id')
   .get(getShop)
-  .put(updateShop)
-  .delete(deleteShop);
+  .put(protect, authorize('admin', 'shop-owner'), updateShop)
+  .delete(protect, authorize('admin', 'shop-owner'), deleteShop);
 
 export default router;
